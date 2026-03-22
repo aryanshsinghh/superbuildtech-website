@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Super Buildtech Constructions Pvt. Ltd.</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap');
+
+  :root {
+    --primary: #1a1a2e;
+    --accent: #e6a817;
+    --accent-dark: #c48f10;
+    --white: #ffffff;
+    --gray-50: #f8f9fa;
+    --gray-100: #f0f1f3;
+    --gray-200: #e2e4e8;
+    --gray-600: #6b7280;
+    --gray-800: #1f2937;
+    --dark: #0a0a1a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: var(--gray-800); overflow-x: hidden; background: var(--white); }
+
+  /* ── NAV ── */
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 5%; background: rgba(10,10,26,.85);
+    backdrop-filter: blur(14px); transition: all .4s;
+  }
+  .navbar.scrolled { padding: 10px 5%; background: rgba(10,10,26,.96); box-shadow: 0 4px 30px rgba(0,0,0,.3); }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo .icon { width: 42px; height: 42px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 20px; color: var(--primary); }
+  .nav-logo span { color: var(--white); font-weight: 700; font-size: 17px; }
+  .nav-logo span em { font-style: normal; color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,.75); text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .4px; transition: color .3s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta { background: var(--accent); color: var(--primary); padding: 10px 24px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px; transition: all .3s; }
+  .nav-cta:hover { background: var(--accent-dark); transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+  .hamburger span { width: 26px; height: 2.5px; background: var(--white); border-radius: 2px; transition: .3s; }
+
+  /* ── HERO ── */
+  .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80') center/cover no-repeat;
+  }
+  .hero-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(10,10,26,.92) 0%, rgba(26,26,46,.85) 40%, rgba(22,33,62,.7) 100%);
+  }
+  .hero-bg-pattern {
+    position: absolute; inset: 0; opacity: .04; z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-inner {
+    position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between;
+    width: 100%; padding: 140px 5% 80px; gap: 40px;
+  }
+  .hero-content { max-width: 620px; }
+  .hero-image {
+    flex-shrink: 0; width: 420px; height: 480px; border-radius: 20px; overflow: hidden;
+    border: 3px solid rgba(230,168,23,.3); box-shadow: 0 30px 80px rgba(0,0,0,.4); position: relative;
+  }
+  .hero-image img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-image::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(10,10,26,.5) 100%);
+  }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(230,168,23,.12); border: 1px solid rgba(230,168,23,.3); padding: 8px 18px; border-radius: 50px; margin-bottom: 28px; }
+  .hero-badge span { color: var(--accent); font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(38px, 5vw, 64px); color: var(--white); line-height: 1.1; margin-bottom: 24px; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p { color: rgba(255,255,255,.7); font-size: 18px; line-height: 1.7; margin-bottom: 40px; max-width: 580px; }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: var(--primary); padding: 16px 36px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 15px; transition: all .3s; display: inline-flex; align-items: center; gap: 10px; }
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(230,168,23,.3); }
+  .btn-outline { border: 2px solid rgba(255,255,255,.25); color: var(--white); padding: 14px 36px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 15px; transition: all .3s; }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-stats { display: flex; gap: 48px; margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,.1); }
+  .hero-stat .num { font-size: 42px; font-weight: 800; color: var(--accent); line-height: 1; }
+  .hero-stat .label { color: rgba(255,255,255,.5); font-size: 13px; margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 5%; }
+  .section-header { text-align: center; margin-bottom: 64px; }
+  .section-tag { display: inline-block; background: rgba(230,168,23,.1); color: var(--accent-dark); padding: 6px 18px; border-radius: 50px; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 48px); color: var(--primary); line-height: 1.2; }
+  .section-header p { color: var(--gray-600); font-size: 17px; margin-top: 16px; max-width: 600px; margin-inline: auto; line-height: 1.7; }
+
+  /* ── SERVICES ── */
+  .services { background: var(--gray-50); }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+  .services-grid .service-card:last-child { grid-column: 1 / -1; max-width: 400px; margin: 0 auto; }
+  .service-card {
+    background: var(--white); border-radius: 16px; padding: 36px; border: 1px solid var(--gray-200);
+    transition: all .4s; cursor: default; position: relative; overflow: hidden; text-align: center;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-dark)); transform: scaleX(0);
+    transform-origin: left; transition: transform .4s;
+  }
+  .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,.08); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon { width: 56px; height: 56px; background: linear-gradient(135deg, rgba(230,168,23,.12), rgba(230,168,23,.05)); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 20px; }
+  .service-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 10px; color: var(--primary); }
+  .service-card p { color: var(--gray-600); font-size: 14.5px; line-height: 1.7; }
+
+  /* ── VISION ── */
+  .vision { background: linear-gradient(135deg, var(--primary) 0%, #16213e 100%); color: var(--white); text-align: center; }
+  .vision .section-tag { background: rgba(230,168,23,.15); color: var(--accent); }
+  .vision h2 { color: var(--white); }
+  .vision-text { max-width: 800px; margin: 0 auto; font-size: 20px; line-height: 1.8; color: rgba(255,255,255,.8); }
+  .vision-text em { font-style: normal; color: var(--accent); font-weight: 600; }
+  .pillars-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 1000px; margin: 50px auto 0; }
+  .pillar { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 16px; padding: 32px 20px; text-align: center; transition: all .3s; }
+  .pillar:hover { background: rgba(230,168,23,.1); border-color: rgba(230,168,23,.3); transform: translateY(-4px); }
+  .pillar .p-icon { font-size: 36px; margin-bottom: 14px; }
+  .pillar h4 { font-size: 15px; font-weight: 700; color: var(--white); }
+
+  /* ── PROJECTS INFINITE CAROUSEL ── */
+  .projects-section { background: var(--gray-50); }
+  .carousel-wrapper { position: relative; max-width: 1200px; margin: 0 auto; overflow: hidden; }
+  .carousel-track { display: flex; gap: 24px; }
+  .carousel-track.animating { transition: transform .5s cubic-bezier(.4,0,.2,1); }
+  .project-card {
+    min-width: calc(33.333% - 16px); border-radius: 20px; overflow: hidden; position: relative;
+    background: var(--dark); aspect-ratio: 4/3; cursor: pointer; flex-shrink: 0;
+  }
+  .project-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; opacity: .85; }
+  .project-card:hover img { transform: scale(1.08); opacity: 1; }
+  .project-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(0deg, rgba(10,10,26,.92) 0%, rgba(10,10,26,.3) 40%, transparent 70%);
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 28px;
+  }
+  .project-logo {
+    position: absolute; top: 20px; right: 20px;
+    background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+    padding: 8px 16px; border-radius: 8px; font-weight: 800; font-size: 11px;
+    color: var(--primary); letter-spacing: 1px; text-transform: uppercase;
+    box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  }
+  .project-overlay h3 { color: var(--white); font-size: 18px; font-weight: 700; }
+  .project-overlay span { color: var(--accent); font-size: 12px; font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: 1.5px; }
+
+  .carousel-nav { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 40px; }
+  .carousel-btn {
+    width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--gray-200);
+    background: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all .3s; font-size: 20px; color: var(--primary);
+  }
+  .carousel-btn:hover { background: var(--accent); border-color: var(--accent); color: var(--white); }
+  .carousel-counter { font-size: 14px; font-weight: 600; color: var(--gray-600); min-width: 60px; text-align: center; }
+
+  /* ── COUNTERS ── */
+  .counters { background: var(--white); }
+  .counters-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; max-width: 1000px; margin: 0 auto; }
+  .counter-box { text-align: center; padding: 32px 16px; }
+  .counter-box .c-num { font-size: 52px; font-weight: 900; color: var(--primary); line-height: 1; }
+  .counter-box .c-num span.count-val { color: var(--accent); }
+  .counter-box .c-label { color: var(--gray-600); font-size: 14px; margin-top: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+
+  /* ── CONTACT ── */
+  .contact { background: var(--gray-50); }
+  .contact-center { max-width: 700px; margin: 0 auto; }
+  .contact-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .contact-card {
+    background: var(--white); border-radius: 16px; padding: 32px 24px; border: 1px solid var(--gray-200);
+    text-align: center; transition: all .3s;
+  }
+  .contact-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,.06); }
+  .contact-card .cc-icon { font-size: 32px; margin-bottom: 16px; }
+  .contact-card h4 { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+  .contact-card p { color: var(--gray-600); font-size: 14px; line-height: 1.6; }
+  .contact-card a { color: var(--accent-dark); text-decoration: none; font-weight: 600; }
+  .contact-cta { text-align: center; margin-top: 48px; }
+  .contact-cta p { color: var(--gray-600); font-size: 16px; margin-bottom: 20px; }
+  .btn-whatsapp {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: #25d366; color: white; padding: 18px 40px; border-radius: 12px;
+    text-decoration: none; font-weight: 700; font-size: 16px; transition: all .3s;
+  }
+  .btn-whatsapp:hover { background: #1fb855; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,.35); }
+  .btn-whatsapp svg { width: 24px; height: 24px; fill: white; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--dark); color: rgba(255,255,255,.6); padding: 60px 5% 30px; }
+  .footer-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
+  .footer-brand p { max-width: 300px; font-size: 14px; line-height: 1.7; margin-top: 12px; }
+  .footer-links h4 { color: var(--white); font-size: 14px; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+  .footer-links a { display: block; color: rgba(255,255,255,.5); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: color .3s; }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 24px; text-align: center; font-size: 13px; }
+
+  /* ── WHATSAPP FAB ── */
+  .whatsapp-fab {
+    position: fixed; bottom: 28px; right: 28px; z-index: 999;
+    width: 60px; height: 60px; background: #25d366; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 24px rgba(37,211,102,.4); cursor: pointer; transition: all .3s;
+    text-decoration: none; animation: fabPulse 2s infinite;
+  }
+  .whatsapp-fab:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(37,211,102,.5); }
+  .whatsapp-fab svg { width: 30px; height: 30px; fill: white; }
+  @keyframes fabPulse {
+    0%, 100% { box-shadow: 0 6px 24px rgba(37,211,102,.4); }
+    50% { box-shadow: 0 6px 36px rgba(37,211,102,.6); }
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-in { opacity: 0; transform: translateY(30px); transition: all .7s ease-out; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(10,10,26,.98); padding: 24px 5%; gap: 20px; }
+    .hero-inner { flex-direction: column; text-align: center; padding-top: 120px; }
+    .hero-image { width: 100%; max-width: 400px; height: 320px; }
+    .hero-stats { gap: 24px; flex-wrap: wrap; justify-content: center; }
+    .hero-btns { justify-content: center; }
+    .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+    .counters-grid { grid-template-columns: repeat(2, 1fr); }
+    .project-card { min-width: calc(100% - 0px); }
+    .footer-top { flex-direction: column; }
+    .services-grid .service-card:last-child { max-width: 100%; }
+  }
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 30px; }
+    .hero-stats { gap: 16px; }
+    .hero-stat .num { font-size: 32px; }
+    .counter-box .c-num { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+  <a href="#home" class="nav-logo">
+    <div class="icon">SB</div>
+    <span>Super <em>Buildtech</em></span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#vision">Vision</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/919711250550" target="_blank" class="nav-cta">Get a Quote</a>
+  <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge"><span>&#9733; Trusted Since 35+ Years</span></div>
+      <h1>Constructive Solutions for <em>Every Building</em> Project</h1>
+      <p>Super Buildtech Constructions Pvt. Ltd. delivers excellence in Industrial Buildings, PEB/Fabrication, Interiors, and Finishing Work. If you can think it, we can build it.</p>
+      <div class="hero-btns">
+        <a href="https://wa.me/919711250550" target="_blank" class="btn-primary">Start Your Project &#8594;</a>
+        <a href="#services" class="btn-outline">Explore Services</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num" id="hero-years">0+</div><div class="label">Years Experience</div></div>
+        <div class="hero-stat"><div class="num" id="hero-projects">0+</div><div class="label">Projects Completed</div></div>
+        <div class="hero-stat"><div class="num" id="hero-team">0+</div><div class="label">Team Members</div></div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&h=700&fit=crop" alt="Construction site" />
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header fade-in">
+    <div class="section-tag">What We Do</div>
+    <h2>Our Core Services</h2>
+    <p>Comprehensive construction solutions powered by three decades of expertise and a relentless commitment to quality.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-in"><div class="service-icon">&#127959;</div><h3>Turnkey Projects</h3><p>End-to-end project delivery from concept to completion. We handle design, procurement, construction, and commissioning under a single contract.</p></div>
+    <div class="service-card fade-in"><div class="service-icon">&#127981;</div><h3>Industrial Construction</h3><p>Specialized in building factories, warehouses, and manufacturing facilities with precision engineering and robust structural solutions.</p></div>
+    <div class="service-card fade-in"><div class="service-icon">&#128715;</div><h3>Interior & Fitout Work</h3><p>Transforming spaces with modern interiors, custom fitouts, and finishing work that reflects your brand and functional needs.</p></div>
+    <div class="service-card fade-in"><div class="service-icon">&#128739;</div><h3>Infrastructure Projects</h3><p>Large-scale infrastructure development including roads, bridges, and public works designed for durability and long-term performance.</p></div>
+    <div class="service-card fade-in"><div class="service-icon">&#128295;</div><h3>Civil R&M Jobs</h3><p>Repair and maintenance services to extend the life of your structures, including structural rehabilitation and preventive maintenance programs.</p></div>
+    <div class="service-card fade-in"><div class="service-icon">&#127960;</div><h3>Renovation & Restoration</h3><p>Breathing new life into existing structures through thoughtful renovation and restoration while preserving structural integrity.</p></div>
+    <div class="service-card fade-in"><div class="service-icon">&#128200;</div><h3>EPCM Services</h3><p>Engineering, Procurement, and Construction Management services providing expert oversight throughout the entire project lifecycle.</p></div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="vision" id="vision">
+  <div class="section-header fade-in">
+    <div class="section-tag">Our Purpose</div>
+    <h2>Our Vision</h2>
+  </div>
+  <p class="vision-text fade-in">To make Super Buildtech Constructions the <em>first choice of clients</em> by delivering projects without compromising on <em>safety, quality, and schedule</em> through the pursuit of excellence by a dedicated, disciplined, and experienced team with a passion to accomplish goals.</p>
+  <div class="pillars-grid fade-in">
+    <div class="pillar"><div class="p-icon">&#128737;</div><h4>Safety First</h4></div>
+    <div class="pillar"><div class="p-icon">&#9881;</div><h4>Machinery & Manpower</h4></div>
+    <div class="pillar"><div class="p-icon">&#9201;</div><h4>Timely Execution</h4></div>
+    <div class="pillar"><div class="p-icon">&#9989;</div><h4>Quality Control</h4></div>
+  </div>
+</section>
+
+<!-- PROJECTS CAROUSEL -->
+<section class="projects-section" id="projects">
+  <div class="section-header fade-in">
+    <div class="section-tag">Our Work</div>
+    <h2>Our Previous & Current Clients</h2>
+    <p>A showcase of our trusted partnerships across industries — from energy and manufacturing to education.</p>
+  </div>
+  <div class="carousel-wrapper fade-in">
+    <div class="carousel-track" id="carouselTrack"></div>
+    <div class="carousel-nav">
+      <button class="carousel-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
+      <div class="carousel-counter" id="carouselCounter">1 / 7</div>
+      <button class="carousel-btn" id="nextBtn" aria-label="Next">&#8594;</button>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTERS -->
+<section class="counters" id="counters">
+  <div class="counters-grid fade-in">
+    <div class="counter-box"><div class="c-num"><span class="count-val" data-target="35">0</span>+</div><div class="c-label">Years Experience</div></div>
+    <div class="counter-box"><div class="c-num"><span class="count-val" data-target="70">0</span>+</div><div class="c-label">Projects Delivered</div></div>
+    <div class="counter-box"><div class="c-num"><span class="count-val" data-target="120">0</span>+</div><div class="c-label">Team Members</div></div>
+    <div class="counter-box"><div class="c-num"><span class="count-val" data-target="100">0</span>%</div><div class="c-label">Client Satisfaction</div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-header fade-in">
+    <div class="section-tag">Get In Touch</div>
+    <h2>Connect With Us</h2>
+    <p>Have a project in mind? Let's discuss how we can bring your vision to life.</p>
+  </div>
+  <div class="contact-center">
+    <div class="contact-cards fade-in">
+      <div class="contact-card">
+        <div class="cc-icon">&#128222;</div>
+        <h4>Phone</h4>
+        <p><a href="tel:+919711250550">+91-9711250550</a></p>
+      </div>
+      <div class="contact-card">
+        <div class="cc-icon">&#9993;</div>
+        <h4>Email</h4>
+        <p><a href="mailto:info@superbuildtech.in">info@superbuildtech.in</a></p>
+      </div>
+      <div class="contact-card">
+        <div class="cc-icon">&#128205;</div>
+        <h4>Office</h4>
+        <p>Dhruv CGHS, Sector 46,<br>Faridabad, Haryana 121010</p>
+      </div>
+    </div>
+    <div class="contact-cta fade-in">
+      <p>Ready to start your project? Reach out to us directly on WhatsApp for a quick response!</p>
+      <a href="https://wa.me/919711250550" target="_blank" class="btn-whatsapp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#home" class="nav-logo" style="margin-bottom:8px;">
+        <div class="icon">SB</div>
+        <span>Super <em>Buildtech</em></span>
+      </a>
+      <p>Three decades of excellence in industrial construction, interiors, and infrastructure. Building the future, one project at a time.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#vision">Our Vision</a>
+      <a href="#contact">Contact Us</a>
+    </div>
+    <div class="footer-links">
+      <h4>Services</h4>
+      <a href="https://wa.me/919711250550" target="_blank">Turnkey Projects</a>
+      <a href="https://wa.me/919711250550" target="_blank">Industrial Construction</a>
+      <a href="https://wa.me/919711250550" target="_blank">Interior & Fitout</a>
+      <a href="https://wa.me/919711250550" target="_blank">EPCM</a>
+    </div>
+    <div class="footer-links">
+      <h4>Contact</h4>
+      <a href="tel:+919711250550">+91-9711250550</a>
+      <a href="mailto:info@superbuildtech.in">info@superbuildtech.in</a>
+      <a href="https://wa.me/919711250550" target="_blank">WhatsApp Us</a>
+      <a>Faridabad, Haryana</a>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; 2026 Super Buildtech Constructions Pvt. Ltd. All rights reserved.</div>
+</footer>
+
+<!-- WHATSAPP FAB -->
+<a href="https://wa.me/919711250550" target="_blank" class="whatsapp-fab" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// ── Navbar scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ── Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ── Counter animation
+function animateCount(el, target, suffix) {
+  const dur = 2000, step = target / (dur / 16);
+  let cur = 0;
+  const timer = setInterval(() => {
+    cur += step;
+    if (cur >= target) { cur = target; clearInterval(timer); }
+    el.textContent = Math.round(cur) + suffix;
+  }, 16);
+}
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    animateCount(document.getElementById('hero-years'), 35, '+');
+    animateCount(document.getElementById('hero-projects'), 70, '+');
+    animateCount(document.getElementById('hero-team'), 120, '+');
+  }, 500);
+});
+let counted = false;
+const counterObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting && !counted) {
+    counted = true;
+    document.querySelectorAll('.count-val').forEach(c => {
+      const t = +c.dataset.target, dur = 2000, step = t / (dur / 16);
+      let cur = 0;
+      const timer = setInterval(() => { cur += step; if (cur >= t) { cur = t; clearInterval(timer); } c.textContent = Math.round(cur); }, 16);
+    });
+  }
+}, { threshold: 0.3 });
+const cs = document.getElementById('counters');
+if (cs) counterObserver.observe(cs);
+
+// ── Infinite Carousel
+const projects = [
+  { name: 'Reliance BP Mobility Ltd', tag: 'Energy & Mobility', logo: 'RELIANCE BP', img: 'https://images.unsplash.com/photo-1611348524140-53c9a25263d6?w=600&h=450&fit=crop', color: '#00a651' },
+  { name: 'Phoenix Contact India Pvt. Ltd', tag: 'Manufacturing Facility', logo: 'PHOENIX CONTACT', img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=450&fit=crop', color: '#0098a1' },
+  { name: 'OMP India Pvt. Ltd', tag: 'Industrial Construction', logo: 'OMP INDIA', img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=450&fit=crop', color: '#2c5aa0' },
+  { name: 'South Delhi Public School', tag: 'Educational Institution', logo: 'SDPS', img: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=450&fit=crop', color: '#c62828' },
+  { name: 'Dalmia Refractories Ltd (Birla Tires)', tag: 'Tyre Manufacturing', logo: 'BIRLA TYRES', img: 'https://images.unsplash.com/photo-1587582423116-ec07293f0395?w=600&h=450&fit=crop', color: '#b71c1c' },
+  { name: 'Asahi India Glass Ltd', tag: 'Glass Manufacturing', logo: 'AIS GLASS', img: 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=600&h=450&fit=crop', color: '#1565c0' },
+  { name: 'AJAY Industrial Corporation', tag: 'Industrial Facility', logo: 'AJAY', img: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&h=450&fit=crop', color: '#2e7d32' },
+  { name: 'Page India Limited', tag: 'Manufacturing Plant', logo: 'PAGE INDIA', img: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&h=450&fit=crop', color: '#e65100' },
+  { name: 'Yokohama India Pvt. Ltd', tag: 'Tyre Manufacturing', logo: 'YOKOHAMA', img: 'https://images.unsplash.com/photo-1590846083693-f23fdede3a7e?w=600&h=450&fit=crop', color: '#d32f2f' },
+  { name: 'Exide India Limited', tag: 'Battery Manufacturing', logo: 'EXIDE', img: 'https://images.unsplash.com/photo-1513828583688-c52571021e58?w=600&h=450&fit=crop', color: '#c62828' },
+];
+
+const track = document.getElementById('carouselTrack');
+const total = projects.length;
+let pos = 0;
+let sliding = false;
+
+function makeCard(p) {
+  return `<div class="project-card">
+    <img src="${p.img}" alt="${p.name}" loading="lazy"/>
+    <div class="project-logo" style="border-left:3px solid ${p.color}">${p.logo}</div>
+    <div class="project-overlay"><span>${p.tag}</span><h3>${p.name}</h3></div>
+  </div>`;
+}
+
+// Build: clones at start and end for infinite effect (3 visible at a time)
+const cloneCount = 3;
+let cards = [];
+for (let i = 0; i < cloneCount; i++) cards.push(projects[(total - cloneCount + i) % total]);
+cards = cards.concat(projects);
+for (let i = 0; i < cloneCount; i++) cards.push(projects[i % total]);
+track.innerHTML = cards.map(makeCard).join('');
+
+const gap = 24;
+let cardW, wrapperW, visibleCount;
+
+function measure() {
+  wrapperW = track.parentElement.offsetWidth;
+  if (window.innerWidth <= 900) visibleCount = 1;
+  else visibleCount = 3;
+  cardW = (wrapperW - gap * (visibleCount - 1)) / visibleCount;
+  track.querySelectorAll('.project-card').forEach(c => { c.style.minWidth = cardW + 'px'; });
+  jumpTo(pos, false);
+}
+
+function getOffset(index) {
+  return -((index + cloneCount) * (cardW + gap));
+}
+
+function jumpTo(index, animate) {
+  if (animate) {
+    track.classList.add('animating');
+  } else {
+    track.classList.remove('animating');
+  }
+  track.style.transform = `translateX(${getOffset(index)}px)`;
+  updateCounter(((index % total) + total) % total);
+}
+
+function slideTo(index) {
+  if (sliding) return;
+  sliding = true;
+  pos = index;
+  jumpTo(pos, true);
+  setTimeout(() => {
+    if (pos >= total) { pos = pos - total; jumpTo(pos, false); }
+    else if (pos < 0) { pos = pos + total; jumpTo(pos, false); }
+    sliding = false;
+  }, 520);
+}
+
+function updateCounter(i) {
+  document.getElementById('carouselCounter').textContent = (i + 1) + ' / ' + total;
+}
+
+document.getElementById('nextBtn').addEventListener('click', () => { slideTo(pos + 1); resetAuto(); });
+document.getElementById('prevBtn').addEventListener('click', () => { slideTo(pos - 1); resetAuto(); });
+
+let autoTimer = setInterval(() => slideTo(pos + 1), 4000);
+function resetAuto() { clearInterval(autoTimer); autoTimer = setInterval(() => slideTo(pos + 1), 4000); }
+
+window.addEventListener('load', measure);
+window.addEventListener('resize', measure);
+
+// ── Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const t = document.querySelector(href);
+      if (t) { t.scrollIntoView({ behavior: 'smooth' }); document.getElementById('navLinks').classList.remove('open'); }
+    }
+  });
+});
+</script>
+
+</body>
+</html>
